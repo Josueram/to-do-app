@@ -9,7 +9,7 @@ import { CreateTodoButton } from './components/CreateTodoButton';
 // import './App.css';
 
 const defaultTodos = [
-  { text: 'Hacer una landing page', completed: true },
+  { text: 'Hacer una landing page', completed: false },
   { text: 'Tomar clases de desarrollo web', completed: true },
   { text: 'Asistir a la reunión de Google', completed: false },
 ]
@@ -37,6 +37,23 @@ function App() {
     })
   }
 
+  // Función para marcar los todos completados
+  const completeTodo = (text) => {
+    const todoIndex = todos.findIndex(todo => todo.text === text);
+    const newTodos = [...todos];
+    newTodos[todoIndex].completed = true;
+    setTodos(newTodos);
+  };
+  
+  
+  // Función para eliminar los todos
+  const deleteTodo = (text) => {
+    const todoIndex = todos.findIndex(todo => todo.text === text);
+    const newTodos = [...todos];
+    newTodos.splice(todoIndex, 1);
+    setTodos(newTodos);
+  };
+
   return (
     <React.Fragment>
       <TodoCounter 
@@ -54,6 +71,8 @@ function App() {
             key = {todo.text} 
             text = {todo.text} 
             completed = {todo.completed}
+            onComplete = {() => completeTodo(todo.text)}
+            onDelete = {() => deleteTodo(todo.text)}
           />
         ))}
       </TodoList>
